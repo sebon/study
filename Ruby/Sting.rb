@@ -139,3 +139,43 @@ puts utf8 == utf16
 puts utf8 + euckr
 puts utf8 + ascii
 #puts utf8 + utf16
+
+# 0부터 9까지의 숫자를 포함하고 있으면 일치
+puts /[0-9]/ === 'ruby'
+puts /[0-9]/ === 'ruby5'
+
+puts /[0-9]/ =~ 'ruby'
+puts /[0-9]/ =~ 'ruby5'
+
+
+def alice?(pattern)
+  pattern === 'alice'
+end
+
+puts alice?(/Alice/i)
+puts alice?('alice')
+
+str = 'ruby5'
+if matched = /[0-9]/.match(str)
+  p matched
+end
+
+
+puts /(가나).+(나가)/ =~ '[가나나나나나나, 나가!]'
+match = Regexp.last_match
+puts match.pre_match # 일치한 문자열보다 앞에 있는 문자열
+puts match[0] # 일치한 문자열 전체
+puts match[1] # 첫 괄호에 일치한 문자열
+puts match[2] # 두 번째 괄호에 일치한 문자열
+puts match[-1] # 마지막 괄호에 일치한 문자열
+puts match.post_match # 일치한 문자열보다 뒤에 있는 문자열
+
+str = 'Yamazaki Niizaki'
+# \w+ 은 한 문자 이상의 영어, 숫자에 일치한다.
+puts str.scan(/\w+zaki/)
+puts str.scan(/(\w+)zaki/)
+
+
+# 보호가 필요한 문자열
+part = Regexp.escape('(incomplete)')
+puts /[^.]+#{part}\.txt/
