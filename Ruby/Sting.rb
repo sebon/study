@@ -179,3 +179,31 @@ puts str.scan(/(\w+)zaki/)
 # 보호가 필요한 문자열
 part = Regexp.escape('(incomplete)')
 puts /[^.]+#{part}\.txt/
+
+# 반복 메타 문자
+pattern = /\d{3}-\d{4}-\d{4}/
+
+puts pattern === '010-1234-5678' # => true
+puts pattern === '02-1234-5678' # => false
+
+# 두줄 문자열
+lines = "1234 \nabcd"
+puts /\A\d+\z/ === lines # => false
+puts /^\d+$/ === lines # => true
+
+# 백트랙 억제
+pattern = /(\w+)/
+puts pattern.match('ruby')[1] # => "ruby"
+puts pattern.match('ruby5')[1] # => 'ruby5'
+
+pattern = /(\w+)[0-9]/
+puts pattern.match('ruby5')[1] # => "ruby"
+
+pattern = /(?>\w+)[0-9]/
+puts pattern === 'ruby5'
+
+
+# 옵션 없음
+%w(foo bar).map
+
+
