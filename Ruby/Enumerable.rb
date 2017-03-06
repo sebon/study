@@ -108,3 +108,180 @@ puts people.sort
 puts people.sort {|a, b| a.length <=> b.length }
 # 요소를 길이로 정렬한다. (2)
 puts people.sort_by {|name| name.length}
+
+
+
+# Array
+puts Array.new(5,1)
+array = Array.new(3, 'naive')
+array[0].reverse!
+puts array
+
+puts Array.new(3) {|index| index.succ }
+puts Array('Alice')
+puts Array(['Alice'])
+puts Array(nil)
+
+array = [4,4,2,3]
+puts array.length
+puts array.empty?
+puts [].empty?
+
+# 다른 두 배열을 연결한 배열
+puts [1,2,3] + [4,5]
+
+puts
+# 요소를 제외한 배열
+puts [4,4,2,3]-[4,3]
+
+puts
+# 공통 요소로만 구성된 배열
+puts [1,2,3]&[2,3,4]
+
+puts
+# n회 반복한 배열
+puts [1,2,3]*2
+
+puts
+array = [4,4,2,3]
+# 첨자 참조
+puts array[2]
+
+# 시작 위치와 길이, 또는 첨자 범위를 지정할 수 있다.
+puts array[2,2]
+puts
+puts array[2..4]
+puts
+puts array.values_at(1)
+puts
+puts array.values_at(1,3)
+puts
+
+# 첫 요소와 첫 요소로부터 n개 요소 취득
+puts array.first
+puts array.first(2)
+puts
+
+# 마지막 요소와 마지막 요소로부터 n개 요소 취득
+puts array.last
+puts array.last(2)
+puts
+
+# 랜덤으로 요소를 취득
+puts array.sample
+puts array.sample(2)
+puts
+
+# 배열에서 특정 키를 가진 요소를 취득
+ary = [[:foo, 4], [:bar, 2], [:baz, 3]]
+p ary.assoc(:bar)
+puts
+
+# 0번째 위치에 대입
+array[0] = 5
+p array
+
+# 배열의 크기보다 큰 첨자를 지정하면, 해당 첨자 위치 전까지는 nil이 채워진다.
+array[10] = 1
+p array
+
+
+array = [4,4,2]
+# 요소를 추가한다.
+array << 3
+p array
+array.push 3
+p array
+# 요소를 추출한다.
+p array.pop
+p array
+
+
+array = [4,4,2,3]
+# 요소를 추출한다.
+array.shift
+p array
+# 요소를 추가한다.
+array.unshift 4
+p array
+
+array = [1,2,3,4]
+array.select! {|v| v.even?}
+p array
+
+array = [1,2,3,4]
+array.reject! {|v| v.even?}
+p array
+
+array = [1,2,3,4]
+# delete_if와 reject! (리시버가 갱신되지 않도록 블록이 false를 반환한다.)
+p array.delete_if {|v| false}
+p array.reject!  {|v| false} # 리시버 요소가 하나도 선택되지 않은 경우에 nil을 반환한다.
+# keep_if와 select! (리시버가 갱신되지 않도록 블록이 true를 반환한다.)
+p array.keep_if {|v| true}
+p array.select! {|v| 2} # 리시버 요소가 하나도 선택되지 않은 경우에 nil을 반환한다.
+
+array = [4, 4.0, 2, 3]
+array.delete 4
+p array
+
+array = [4,4,2,3]
+array.delete_at 1 # 지정한 인덱스 요소를 삭제한다.
+p array
+
+
+array = [false, nil, 0, '', []]
+p array.compact
+p array
+# 파괴적 compact
+p array.compact!
+p array
+
+array = [4, 4, 4.0, 2]
+p array.uniq
+p array
+# 파괴적 uniq
+p array.uniq!
+p array
+
+array = [4,4,2,3]
+p array.reverse
+p array # 원 객체는 갱신되지 않는다.
+# reverse! 는 자신을 갱신(파괴)한다.
+p array.reverse!
+p array
+
+array = [4, [4,[2,3]]]
+p array.flatten # 배열을 일차원으로 변경한다.
+p array
+p array.flatten!
+p array
+
+array = [4,4,2,3]
+p array.sort!
+p array
+
+array = ["fooo", "fooo", "fo", "f"]
+p array.sort_by! {|v| v.length}
+p array
+
+people = %w(Alice Bob Charlie)
+people.map! {|person| person.upcase}
+p people
+
+array = [['a', 'b', 'c'], [1, 2, 3]]
+
+# 행과 열을 바꾼 배열을 취득
+p array.transpose
+
+array = [1, 'a']
+p array.zip([2,'b'], [3,'c'])
+
+array = [1, 3, 5, 7, 9]
+p array.bsearch{|n| n>6}
+p array.bsearch{|n| n==8}
+p array.bsearch{|n| n>10}
+
+array = [24,1,365]
+p array.join
+p array.join('-')
