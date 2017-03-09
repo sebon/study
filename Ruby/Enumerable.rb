@@ -285,3 +285,58 @@ p array.bsearch{|n| n>10}
 array = [24,1,365]
 p array.join
 p array.join('-')
+
+array = [1,2]
+
+p array.hash
+array.reverse!
+p array.hash
+
+
+hash = {one: 1, two: 2}
+
+# 키와 값을 반복
+hash.each do |key, val|
+  puts "#{key}: #{val}"
+end
+
+# 키만 반복
+hash.each_key do |key|
+  puts "#{key}"
+end
+
+# 값만 반복
+hash.each_value do |key|
+  puts "#{key}"
+end
+
+
+# 값 변경/추가/삭제
+hash = {}
+hash[:foo] = 'bar'
+hash[:hoge] = 'piyo'
+p hash
+
+hash = {foo: 'bar'}
+hash.delete(:foo)
+p hash
+
+hash = {foo:1, bar:2, baz:3}
+# 값이 홀수면 남긴다.
+hash.select! {|key, val| val.odd?}
+p hash
+
+hash = {foo:1, bar:2, baz:3}
+# 값이 짝수면 남긴다.
+hash.reject! {|key, val| val.odd?}
+p hash
+
+hash = {foo:1, bar:2, baz:3}
+# 변경 내용이 없어도 항상 self를 반환
+p hash.keep_if {|key, val| true}
+p hash.delete_if {|key, val| false}
+
+
+hash = {foo: 1, bar: 2, baz: 3}
+p hash.select {|key, val| val.odd?}
+p hash.reject {|key, val| val.odd?}
