@@ -340,3 +340,67 @@ p hash.delete_if {|key, val| false}
 hash = {foo: 1, bar: 2, baz: 3}
 p hash.select {|key, val| val.odd?}
 p hash.reject {|key, val| val.odd?}
+
+
+a = {one: 'A', two: nil}
+b = {two: 'B', three: 'C'}
+
+# a에 b를 병합(two가 중복돼서 덮어쓰기된다.)
+p a.merge(b)
+
+def keywords(hash= {})
+  defaults = {alice: '앨리스', bob: '밥'} # 초깃값 해시
+  hash = defaults.merge(hash)
+
+  p hash
+end
+
+keywords bob: '밥'
+
+
+hash = {one: 'A'}
+hash.merge! two: 'B'
+p hash
+
+has_default = Hash.new ('undefined')
+p has_default['foo']
+
+has_default = Hash.new('naive')
+p value = has_default['foo']
+
+value.reverse!
+p has_default['foo']
+
+has_default = Hash.new {|hash, key| Time.now}
+puts has_default['foo']
+sleep 1
+puts has_default['foo']
+
+has_default = {}
+p has_default['foo']
+
+# 초깃값을 설정한다.
+has_default.default ='bar'
+p has_default['foo']
+
+# 초깃값 반환을 위한 처리 객체를 설정한다.
+has_default.default_proc = ->(hash, key) {Time.now}
+p has_default['foo']
+
+hash = {} # 빈 해시
+
+p hash.fetch('foo', 'default')
+p hash.fetch('foo') {|key| key}
+#p hash.fetch('foo')
+
+a = {one: 1, two: 2}.to_a
+p a.assoc(:one)
+
+
+# 요소 수가 짝수일 배열
+ary = ['key1', 'one', 'key2', 'two']
+p Hash[*ary]
+
+# 다차원 배열 지정
+ary = [['key1', 'one'], ['key2', 'two']]
+p Hash[ary]
