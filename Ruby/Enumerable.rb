@@ -404,3 +404,81 @@ p Hash[*ary]
 # 다차원 배열 지정
 ary = [['key1', 'one'], ['key2', 'two']]
 p Hash[ary]
+
+
+# Enumerator
+p [].each
+#p {}.each
+p (1..10).each
+p ''.each_char
+p 10.times
+p loop
+
+p [1,2,3].to_enum
+p 'Alice'.enum_for(:each_char)
+
+lines = <<EOM
+Alice
+Bob
+Charlie
+EOM
+
+enum = lines.each_line
+p enum.map {|line| line.length }
+
+# 첨자와 함께 출력
+%w(Alice Bob Charlie).each.with_index do|name, index|
+  puts "#{index}: #{name}"
+end
+
+# 첨자가 1 이상인 요소를 반환한다.
+p %w(Alice Bob Charlie).select.with_index { |name, index|
+  index > 0
+}
+
+enum = [4,4,2,3].to_enum
+p enum.next
+p enum.next
+p enum.next
+enum.rewind # 처음부터 다시 반복한다.
+p enum.next
+
+enum = [4,4,2,3].to_enum
+loop do
+  p enum.next
+end
+
+people = %w(Alice Bob Charlie, David).to_enum
+ages = [14, 32, 28].to_enum
+
+loop do
+  person = people.next
+  age =  ages.next
+  p "#{person} #{age}"
+end
+
+
+enum =%w(Alice Bob  Charlie).select
+# /li/에 일치하는 요소만 취득
+loop do
+  begin
+    person = enum.next
+    enum.feed /li/ === person
+  rescue StopIteration => e
+    p e.result
+    break
+  end
+end
+
+
+# 모든 요소를 처리할 수 없거나 시간이 오래 걸리는 경우
+odd_numbers = (0..Float::INFINITY).lazy.map {|n| n.succ }.select { |n| n.odd?}.take(3)
+p odd_numbers.force
+
+(0..Float::INFINITY).lazy.map { |n|
+  p "map: #{n}"
+  n.succ
+}.select {|n|
+  p "select: #{n}"
+  n.odd?
+}.take(3).force
